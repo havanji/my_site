@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Post
+from .models import Post, Tag
 
 def starting_page(request):
   latest_posts = Post.objects.all().order_by("-date")[:3]
@@ -16,6 +16,7 @@ def posts(request):
 def post_detail(request, slug):
   identefied_post = get_object_or_404(Post, slug=slug)
   return render(request, "blog/post-detail.html", {
-    "post": identefied_post
+    "post": identefied_post,
+    "post_tags": identefied_post.tags.all()
   })
 
